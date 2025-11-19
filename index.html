@@ -16,7 +16,7 @@
 
         body {
             background: #f4f6fb;
-            color: #111827;
+            color: #222;
             line-height: 1.6;
         }
 
@@ -164,10 +164,6 @@
 
         .btn.secondary {
             background: #2563eb;
-        }
-
-        .btn.danger {
-            background: #ef4444;
         }
 
         .btn:disabled {
@@ -363,11 +359,17 @@
 
         .scanner-layout {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
             gap: 1rem;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
+            .scanner-layout {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 800px) {
             .scanner-layout {
                 grid-template-columns: 1fr;
             }
@@ -378,50 +380,6 @@
             border-radius: 0.5rem;
             margin-bottom: 0.4rem;
             display: none;
-        }
-
-        /* ====== AUTH & LEADERBOARD ====== */
-        .auth-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
-            gap: 1rem;
-        }
-
-        @media (max-width: 900px) {
-            .auth-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .auth-status {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .auth-status span {
-            font-weight: 600;
-            color: #16a34a;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-
-        th, td {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 0.35rem 0.4rem;
-            text-align: left;
-        }
-
-        th {
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-
-        tbody tr:nth-child(odd) {
-            background: #f9fafb;
         }
 
         footer {
@@ -443,7 +401,6 @@
             <a href="#artikel">Artikel</a>
             <a href="#bmi">BMI & Kalori</a>
             <a href="#ai">AI & Scanner</a>
-            <a href="#akun">Akun & Poin</a>
         </div>
     </nav>
 </header>
@@ -479,14 +436,10 @@
                 <a href="#ai">
                     <button class="btn secondary">Coba AI & Scanner</button>
                 </a>
-                <a href="#akun">
-                    <button class="btn secondary">Gabung Leaderboard</button>
-                </a>
             </div>
 
             <p class="hero-note">
-                Dengan tahu kebutuhan kalori harian dan memantau sisa makanan,
-                kita bisa makan secukupnya dan mengurangi makanan yang terbuang.
+                Dengan tahu kebutuhan kalori harian, kita bisa makan secukupnya dan mengurangi makanan yang terbuang.  
                 Sisa makanan yang masih layak bisa diolah, bukan langsung jadi sampah.
             </p>
         </div>
@@ -503,9 +456,8 @@
                 bukan hanya berakhir di tempat pembuangan akhir.
             </div>
             <div class="hero-visual-item">
-                <strong>🏆 Poin & Leaderboard</strong>
-                Scan makananmu, kumpulkan poin berdasarkan kalori yang “diselamatkan”,
-                dan lihat peringkatmu di antara pengguna lain.
+                <strong>🤖 Bantuan AI</strong>
+                AI membantu mengenali jenis sampah makanan dan memberi estimasi kalori makanan yang “terbuang”.
             </div>
         </div>
     </section>
@@ -680,8 +632,6 @@
                 <p style="font-size: 0.9rem; margin-bottom: 0.6rem;">
                     Masukkan nama makanan dan perkiraan beratnya. Sistem akan menghitung estimasi kalori berdasarkan database sederhana,
                     dan menentukan jenis sampah (organik/anorganik).
-                    <br><br>
-                    <strong>Poin:</strong> setiap scan manual yang berhasil memberikan poin berdasarkan jumlah kalori.
                 </p>
 
                 <form id="scannerForm" onsubmit="event.preventDefault(); scanMakanan();">
@@ -706,8 +656,6 @@
                 <p style="font-size: 0.9rem; margin-bottom: 0.6rem;">
                     Upload foto makananmu. AI akan mencoba mengenali makanan, memperkirakan kalori, dan memberi saran
                     pengurangan food waste. Pemrosesan dilakukan di server, API key disimpan aman.
-                    <br><br>
-                    <strong>Poin:</strong> setiap analisis foto yang berhasil memberi bonus poin.
                 </p>
 
                 <img id="visionPreview" alt="Preview foto makanan">
@@ -722,106 +670,6 @@
                 </form>
 
                 <div id="visionResult" class="result-box" style="display:none; margin-top:0.6rem;"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== AKUN, POIN, LEADERBOARD ====== -->
-    <section id="akun">
-        <div class="card-header" style="margin-bottom: 0.6rem;">
-            <h2>Akun, Poin, & Leaderboard</h2>
-            <span class="pill">Login sederhana · Disimpan di browser (localStorage)</span>
-        </div>
-        <p style="font-size: 0.9rem; margin-bottom: 0.8rem;">
-            Buat akun sederhana (username & password), kumpulkan poin dari hasil scan makanan (manual maupun foto),
-            lalu lihat peringkatmu di leaderboard. Data hanya tersimpan di browser ini (untuk keperluan demo / tugas).
-        </p>
-
-        <div class="auth-grid">
-            <!-- Card kiri: login / register -->
-            <div class="card">
-                <h3 style="margin-bottom: 0.5rem;">Masuk / Daftar</h3>
-                <p class="auth-status" id="authStatus">
-                    Belum login.
-                </p>
-
-                <div id="authForms">
-                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem;">
-                        <!-- Register -->
-                        <div>
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.3rem;">Daftar akun baru</h4>
-                            <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();">
-                                <label for="regUsername">Username</label>
-                                <input id="regUsername" type="text" placeholder="minimal 3 karakter" required>
-
-                                <label for="regPassword">Password</label>
-                                <input id="regPassword" type="password" placeholder="minimal 4 karakter" required>
-
-                                <button type="submit" class="btn" style="margin-top: 0.2rem;">Daftar</button>
-                            </form>
-                        </div>
-
-                        <!-- Login -->
-                        <div>
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.3rem;">Login</h4>
-                            <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
-                                <label for="loginUsername">Username</label>
-                                <input id="loginUsername" type="text" required>
-
-                                <label for="loginPassword">Password</label>
-                                <input id="loginPassword" type="password" required>
-
-                                <button type="submit" class="btn secondary" style="margin-top: 0.2rem;">Masuk</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="loggedInArea" style="display:none;">
-                    <p style="font-size:0.9rem; margin-bottom:0.5rem;">
-                        Kamu login sebagai <span id="currentUserLabel" style="font-weight:600;"></span>.
-                    </p>
-                    <p style="font-size:0.9rem; margin-bottom:0.5rem;">
-                        Total poin kamu:
-                        <span id="currentUserPoints" class="result-highlight">0</span> poin.
-                    </p>
-                    <button class="btn danger" onclick="handleLogout()">Logout</button>
-                </div>
-
-                <p style="margin-top:0.8rem; font-size:0.8rem; color:#6b7280;">
-                    Catatan: Sistem ini hanya untuk tugas / demo. Password disimpan dalam bentuk sederhana di
-                    <code>localStorage</code> browser, bukan di server.
-                </p>
-            </div>
-
-            <!-- Card kanan: leaderboard -->
-            <div class="card">
-                <div class="card-header">
-                    <h3>Leaderboard Pemilah Sampah</h3>
-                    <span class="pill">Poin dari scan makanan</span>
-                </div>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">
-                    Poin dihitung dari:
-                </p>
-                <ul style="padding-left:1.2rem; font-size:0.85rem; margin-bottom:0.6rem;">
-                    <li>Scan manual: ± 1 poin per 100 kkal makanan yang dipindai.</li>
-                    <li>AI Vision (foto makanan): bonus 5 poin per analisis foto.</li>
-                </ul>
-
-                <div class="result-box" id="leaderboardBox">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Username</th>
-                                <th>Poin</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leaderboardBody">
-                            <!-- diisi via JS -->
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </section>
@@ -875,10 +723,17 @@
     }
 
     // =======================
-    // 2. CHAT AI (PAKAI BACKEND /api/gemini-text)
+    // 2. CONFIG MODEL (TANPA API KEY)
     // =======================
+    // Model ditentukan di front-end, API key disimpan di backend.
+    const GEMINI_MODEL_TEXT = "gemini-2.5-flash";
+    const GEMINI_MODEL_VISION = "gemini-2.5-flash";
+
     const chatBox = document.getElementById('chatBox');
 
+    // =======================
+    // 3. HISTORY AWAL CHAT
+    // =======================
     const geminiHistory = [
         {
             role: "user",
@@ -899,6 +754,46 @@
         }
     ];
 
+    // =======================
+    // 4. PANGGIL GEMINI TEKS VIA BACKEND
+    // =======================
+    async function panggilGemini(pesanUser) {
+        geminiHistory.push({
+            role: "user",
+            parts: [{ text: pesanUser }]
+        });
+
+        const body = { contents: geminiHistory, model: GEMINI_MODEL_TEXT };
+
+        const res = await fetch("/api/gemini-text", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        console.log("Respon chat dari backend:", data);
+
+        if (data.error) {
+            console.error("Error dari backend / Gemini:", data.error);
+            throw new Error(data.error.message || "Error dari Gemini");
+        }
+
+        const jawab =
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+            "Maaf, AI tidak mengembalikan jawaban.";
+
+        geminiHistory.push({
+            role: "model",
+            parts: [{ text: jawab }]
+        });
+
+        return jawab;
+    }
+
+    // =======================
+    // 5. CHAT UI
+    // =======================
     function tambahPesan(teks, dariUser) {
         const msg = document.createElement("div");
         msg.classList.add("chat-msg", dariUser ? "user" : "bot");
@@ -910,38 +805,6 @@
         msg.appendChild(bubble);
         chatBox.appendChild(msg);
         chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    async function panggilGeminiText(pesanUser) {
-        geminiHistory.push({
-            role: "user",
-            parts: [{ text: pesanUser }]
-        });
-
-        const body = { contents: geminiHistory };
-
-        const res = await fetch("/api/gemini-text", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        });
-
-        if (!res.ok) {
-            console.error(await res.text());
-            throw new Error("Gagal memanggil Gemini text");
-        }
-
-        const data = await res.json();
-        const jawab =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "Maaf, AI tidak mengembalikan jawaban.";
-
-        geminiHistory.push({
-            role: "model",
-            parts: [{ text: jawab }]
-        });
-
-        return jawab;
     }
 
     async function kirimPesanAI() {
@@ -962,220 +825,21 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
-            const jawaban = await panggilGeminiText(teks);
+            const jawaban = await panggilGemini(teks);
             loading.remove();
             tambahPesan(jawaban, false);
         } catch (e) {
             loading.remove();
-            tambahPesan("⚠️ Terjadi kesalahan memanggil AI.", false);
             console.error(e);
+            tambahPesan("⚠️ Terjadi kesalahan memanggil AI: " + (e.message || ""), false);
         }
     }
 
-    // Pesan pembuka chat
+    // Pesan pembuka
     tambahPesan("Halo! Aku terhubung ke AI server. Tanyakan apa saja tentang sampah makanan, food waste, atau SDGs 2 & 12.", false);
 
     // =======================
-    // 3. SISTEM POIN & AUTH (LOCALSTORAGE)
-    // =======================
-    const LS_USERS_KEY = "bsm_users";
-    const LS_CURRENT_USER_KEY = "bsm_current_user";
-
-    function loadUsers() {
-        try {
-            return JSON.parse(localStorage.getItem(LS_USERS_KEY)) || {};
-        } catch (e) {
-            return {};
-        }
-    }
-
-    function saveUsers(users) {
-        localStorage.setItem(LS_USERS_KEY, JSON.stringify(users));
-    }
-
-    function getCurrentUser() {
-        return localStorage.getItem(LS_CURRENT_USER_KEY) || null;
-    }
-
-    function setCurrentUser(username) {
-        if (username) {
-            localStorage.setItem(LS_CURRENT_USER_KEY, username);
-        } else {
-            localStorage.removeItem(LS_CURRENT_USER_KEY);
-        }
-    }
-
-    function register(username, password) {
-        let users = loadUsers();
-
-        if (users[username]) {
-            alert("Username sudah dipakai!");
-            return false;
-        }
-
-        if (username.length < 3) {
-            alert("Username minimal 3 karakter.");
-            return false;
-        }
-        if (password.length < 4) {
-            alert("Password minimal 4 karakter.");
-            return false;
-        }
-
-        users[username] = {
-            password: password,
-            points: 0
-        };
-
-        saveUsers(users);
-        alert("Register berhasil! Silakan login.");
-        return true;
-    }
-
-    function login(username, password) {
-        let users = loadUsers();
-
-        if (!users[username]) {
-            alert("User tidak ditemukan!");
-            return false;
-        }
-
-        if (users[username].password !== password) {
-            alert("Password salah!");
-            return false;
-        }
-
-        setCurrentUser(username);
-        alert("Login berhasil!");
-        return true;
-    }
-
-    function logout() {
-        setCurrentUser(null);
-    }
-
-    function tambahPoin(poin) {
-        const username = getCurrentUser();
-        if (!username) {
-            // tidak wajib alert, biar ga ganggu
-            console.log("User belum login, poin tidak disimpan.");
-            return;
-        }
-
-        let users = loadUsers();
-        if (!users[username]) return;
-
-        users[username].points = (users[username].points || 0) + poin;
-        saveUsers(users);
-        refreshAuthUI();
-        refreshLeaderboardUI();
-    }
-
-    function getLeaderboardData() {
-        let users = loadUsers();
-        let list = Object.keys(users).map(name => ({
-            username: name,
-            points: users[name].points || 0
-        }));
-
-        list.sort((a, b) => b.points - a.points);
-        return list;
-    }
-
-    function refreshAuthUI() {
-        const authStatus = document.getElementById("authStatus");
-        const authForms = document.getElementById("authForms");
-        const loggedInArea = document.getElementById("loggedInArea");
-        const currentUserLabel = document.getElementById("currentUserLabel");
-        const currentUserPoints = document.getElementById("currentUserPoints");
-
-        const username = getCurrentUser();
-        const users = loadUsers();
-
-        if (username && users[username]) {
-            authStatus.innerHTML = 'Status: <span>Sudah login</span>.';
-            authForms.style.display = "none";
-            loggedInArea.style.display = "block";
-            currentUserLabel.textContent = username;
-            currentUserPoints.textContent = users[username].points || 0;
-        } else {
-            authStatus.textContent = "Belum login.";
-            authForms.style.display = "block";
-            loggedInArea.style.display = "none";
-        }
-    }
-
-    function refreshLeaderboardUI() {
-        const tbody = document.getElementById("leaderboardBody");
-        tbody.innerHTML = "";
-
-        const data = getLeaderboardData();
-        if (data.length === 0) {
-            const row = document.createElement("tr");
-            const cell = document.createElement("td");
-            cell.colSpan = 3;
-            cell.textContent = "Belum ada data. Mulai scan makanan untuk mengumpulkan poin!";
-            row.appendChild(cell);
-            tbody.appendChild(row);
-            return;
-        }
-
-        data.forEach((item, idx) => {
-            const tr = document.createElement("tr");
-
-            const tdRank = document.createElement("td");
-            tdRank.textContent = idx + 1;
-
-            const tdName = document.createElement("td");
-            tdName.textContent = item.username;
-
-            const tdPoints = document.createElement("td");
-            tdPoints.textContent = item.points;
-
-            tr.appendChild(tdRank);
-            tr.appendChild(tdName);
-            tr.appendChild(tdPoints);
-            tbody.appendChild(tr);
-        });
-    }
-
-    function handleRegister() {
-        const u = document.getElementById("regUsername").value.trim();
-        const p = document.getElementById("regPassword").value.trim();
-        if (!u || !p) return;
-
-        if (register(u, p)) {
-            document.getElementById("regUsername").value = "";
-            document.getElementById("regPassword").value = "";
-            refreshLeaderboardUI();
-        }
-    }
-
-    function handleLogin() {
-        const u = document.getElementById("loginUsername").value.trim();
-        const p = document.getElementById("loginPassword").value.trim();
-        if (!u || !p) return;
-
-        if (login(u, p)) {
-            document.getElementById("loginUsername").value = "";
-            document.getElementById("loginPassword").value = "";
-            refreshAuthUI();
-            refreshLeaderboardUI();
-        }
-    }
-
-    function handleLogout() {
-        logout();
-        refreshAuthUI();
-        refreshLeaderboardUI();
-    }
-
-    // Panggil saat pertama kali halaman diload
-    refreshAuthUI();
-    refreshLeaderboardUI();
-
-    // =======================
-    // 4. “SCANNER” MAKANAN & KALORI (MANUAL) + POIN
+    // 6. “SCANNER” MAKANAN & KALORI (MANUAL)
     // =======================
     const foodCaloriesPer100g = {
         "nasi": 130,
@@ -1227,10 +891,8 @@
         }
 
         let estimasiKaloriText;
-        let totalKalori = null;
-
         if (kaloriPer100) {
-            totalKalori = kaloriPer100 * (weight / 100);
+            const totalKalori = kaloriPer100 * (weight / 100);
             estimasiKaloriText = totalKalori.toFixed(0) + ' kkal (estimasi untuk ' + weight + ' g).';
         } else {
             estimasiKaloriText = "Data kalori makanan ini belum ada di database sederhana kami. Untuk tugas, kamu bisa tambahkan sendiri di variabel JavaScript.";
@@ -1238,26 +900,17 @@
 
         const jenisSampah = deteksiJenisSampah(nama);
 
-        let poinText = "";
-        if (totalKalori) {
-            // 1 poin per 100 kkal (dibulatkan)
-            const poin = Math.max(1, Math.round(totalKalori / 100));
-            tambahPoin(poin);
-            poinText = "<br><strong>Poin didapat:</strong> +" + poin + " poin (dari " + totalKalori.toFixed(0) + " kkal).";
-        }
-
         resultBox.style.display = 'block';
         resultBox.innerHTML =
             '<strong>Nama makanan:</strong> ' + nama +
             '<br><strong>Berat:</strong> ' + weight + ' g' +
             '<br><strong>Perkiraan jenis sampah:</strong> ' + jenisSampah +
             '<br><strong>Estimasi kalori:</strong> ' + estimasiKaloriText +
-            poinText +
             '<br><br><em>Catatan:</em> Jika makanan seperti ini sering tersisa dan dibuang, coba atur ulang porsi atau pola belanja untuk mengurangi food waste.';
     }
 
     // =======================
-    // 5. AI VISION – ANALISIS FOTO MAKANAN + POIN BONUS
+    // 7. AI VISION – ANALISIS FOTO MAKANAN VIA BACKEND
     // =======================
     async function panggilGeminiVision(base64Image, mimeType) {
         const body = {
@@ -1280,7 +933,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            model: GEMINI_MODEL_VISION
         };
 
         const res = await fetch("/api/gemini-vision", {
@@ -1289,12 +943,14 @@
             body: JSON.stringify(body)
         });
 
-        if (!res.ok) {
-            console.error(await res.text());
-            throw new Error("Gagal memanggil Gemini Vision");
+        const data = await res.json();
+        console.log("Respon vision dari backend:", data);
+
+        if (data.error) {
+            console.error("Error Vision:", data.error);
+            throw new Error(data.error.message || "Gagal memanggil AI Vision");
         }
 
-        const data = await res.json();
         const text =
             data?.candidates?.[0]?.content?.parts?.[0]?.text ||
             "Maaf, AI tidak mengembalikan jawaban.";
@@ -1325,20 +981,15 @@
         const reader = new FileReader();
         reader.onload = async () => {
             try {
-                const base64 = reader.result.split(",")[1]; // buang prefix data:
+                const base64 = reader.result.split(",")[1];
                 const jawaban = await panggilGeminiVision(base64, file.type);
-
-                // bonus poin tetap, misalnya 5 poin per analisis foto
-                const bonus = 5;
-                tambahPoin(bonus);
 
                 resultBox.innerHTML =
                     "<strong>Hasil analisis AI:</strong><br>" +
-                    jawaban.replace(/\n/g, "<br>") +
-                    "<br><br><strong>Poin bonus:</strong> +" + bonus + " poin karena sudah menganalisis foto makanan.";
+                    jawaban.replace(/\n/g, "<br>");
             } catch (err) {
                 console.error(err);
-                resultBox.innerHTML = "⚠️ Terjadi kesalahan saat memanggil AI Vision.";
+                resultBox.innerHTML = "⚠️ Terjadi kesalahan saat memanggil AI Vision: " + (err.message || "");
             }
         };
 
@@ -1346,14 +997,19 @@
     }
 
     // =======================
-    // 6. CATATAN UNTUK TUGAS
+    // 8. CATATAN (UNTUK PENJELASAN TUGAS)
     // =======================
     /*
-      - Login & poin: disimpan di localStorage browser, bukan di server.
-      - Leaderboard: hanya mencerminkan data di perangkat ini, bukan global.
-      - Chat & Vision: memanggil backend /api/gemini-text dan /api/gemini-vision
-        yang kamu buat di Vercel, dengan API key disimpan aman di environment
-        variable GEMINI_API_KEY.
+      Di versi ini:
+      - Front-end (file HTML ini) TIDAK menyimpan API key.
+      - Semua request AI (chat & vision) dikirim ke endpoint backend:
+          /api/gemini-text
+          /api/gemini-vision
+      - Backend yang akan memanggil Gemini API dengan API key rahasia yang disimpan
+        sebagai environment variable (GEMINI_API_KEY) di server / Vercel.
+
+      Ini adalah cara "aman" untuk mem-publish website yang memakai API berbayar
+      seperti Gemini tanpa membocorkan API key ke publik.
     */
 </script>
 
