@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        /* ====== RESET SEDERHANA ====== */
+       
         * {
             box-sizing: border-box;
             margin: 0;
@@ -29,7 +29,7 @@
             text-decoration: underline;
         }
 
-        /* ====== LAYOUT DASAR ====== */
+       
         header {
             position: sticky;
             top: 0;
@@ -244,7 +244,7 @@
             display: block;
         }
 
-        /* ====== ARTIKEL ====== */
+        
         .articles {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -310,7 +310,7 @@
             color: #16a34a;
         }
 
-        /* ====== CHAT / SCANNER / VISION ====== */
+       
         .chat-box {
             max-height: 260px;
             overflow-y: auto;
@@ -380,7 +380,7 @@
             display: none;
         }
 
-        /* ====== AUTH & LEADERBOARD ====== */
+      
         .auth-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
@@ -449,7 +449,7 @@
 </header>
 
 <main>
-    <!-- ====== HERO / BERANDA ====== -->
+  
     <section class="hero">
         <div>
             <div class="tag">
@@ -510,7 +510,7 @@
         </div>
     </section>
 
-    <!-- ====== TENTANG / SDGS ====== -->
+ 
     <section id="tentang">
         <h2>Tentang Bank Sampah Makanan & SDGs</h2>
         <p>
@@ -532,7 +532,7 @@
         </ul>
     </section>
 
-    <!-- ====== ARTIKEL ====== -->
+  
     <section id="artikel">
         <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem;">
             <h2>Artikel Edukasi Pengelolaan Sampah Makanan</h2>
@@ -576,7 +576,7 @@
         </div>
     </section>
 
-    <!-- ====== BMI & KALORI ====== -->
+    
     <section id="bmi">
         <div class="grid">
             <!-- Kalkulator -->
@@ -622,7 +622,7 @@
                 <div id="bmiResult" class="result-box" style="display:none;"></div>
             </div>
 
-            <!-- Edukasi -->
+      
             <div class="card">
                 <h3>Kenapa fitur ini mendukung pengurangan sampah makanan?</h3>
                 <p>
@@ -645,10 +645,10 @@
         </div>
     </section>
 
-    <!-- ====== AI & SCANNER & VISION ====== -->
+
     <section id="ai">
         <div class="scanner-layout">
-            <!-- Chat AI -->
+            
             <div class="card">
                 <div class="card-header">
                     <h2>Asisten AI Sampah Makanan</h2>
@@ -671,33 +671,10 @@
                 </form>
             </div>
 
-            <!-- Scanner manual -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>“Scanner” Makanan & Estimasi Kalori</h2>
-                    <span class="pill">Input teks manual</span>
-                </div>
-                <p style="font-size: 0.9rem; margin-bottom: 0.6rem;">
-                    Masukkan nama makanan dan perkiraan beratnya. Sistem akan menghitung estimasi kalori berdasarkan database sederhana,
-                    dan menentukan jenis sampah (organik/anorganik).
-                    <br><br>
-                    <strong>Poin:</strong> setiap scan manual yang berhasil memberikan poin berdasarkan jumlah kalori.
-                </p>
+       
+        
 
-                <form id="scannerForm" onsubmit="event.preventDefault(); scanMakanan();">
-                    <label for="foodName">Nama makanan</label>
-                    <input id="foodName" type="text" placeholder="Contoh: nasi, ayam goreng, sayur tumis, plastik, dll" required>
-
-                    <label for="foodWeight">Perkiraan berat (gram)</label>
-                    <input id="foodWeight" type="number" min="1" max="2000" placeholder="Contoh: 150" required>
-
-                    <button type="submit" class="btn" style="margin-top: 0.1rem;">Deteksi Jenis & Kalori</button>
-                </form>
-
-                <div id="scannerResult" class="result-box" style="display:none;"></div>
-            </div>
-
-            <!-- AI Vision -->
+           
             <div class="card">
                 <div class="card-header">
                     <h2>AI Vision – Foto Makanan</h2>
@@ -726,19 +703,19 @@
         </div>
     </section>
 
-    <!-- ====== AKUN, POIN, LEADERBOARD ====== -->
+  
     <section id="akun">
         <div class="card-header" style="margin-bottom: 0.6rem;">
             <h2>Akun, Poin, & Leaderboard</h2>
-            <span class="pill">Login sederhana · Disimpan di browser (localStorage)</span>
+            <span class="pill">Login sederhana </span>
         </div>
         <p style="font-size: 0.9rem; margin-bottom: 0.8rem;">
             Buat akun sederhana (username & password), kumpulkan poin dari hasil scan makanan (manual maupun foto),
-            lalu lihat peringkatmu di leaderboard. Data hanya tersimpan di browser ini (untuk keperluan demo / tugas).
+            lalu lihat peringkatmu di leaderboard.
         </p>
 
         <div class="auth-grid">
-            <!-- Card kiri: login / register -->
+           
             <div class="card">
                 <h3 style="margin-bottom: 0.5rem;">Masuk / Daftar</h3>
                 <p class="auth-status" id="authStatus">
@@ -747,7 +724,7 @@
 
                 <div id="authForms">
                     <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem;">
-                        <!-- Register -->
+                  
                         <div>
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.3rem;">Daftar akun baru</h4>
                             <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();">
